@@ -29,14 +29,14 @@ console.log(dark);
       } bg-dark-purple dark:bg-gray-800 h-screen p-5 pt-8 relative duration-300`}
     >
       <img
-        src="./src/assets/control.png"
+        src="/assets/control.png"
         className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
          border-2 rounded-full ${!open && "rotate-180"}`}
         onClick={() => setOpen(!open)}
       />
       <div className="flex gap-x-4 items-center">
         <img
-          src="./src/assets/logo.png"
+          src="/assets/logo.png"
           className={`cursor-pointer duration-500 ${
             open && "rotate-[360deg]"
           }`}
@@ -59,7 +59,7 @@ console.log(dark);
             onClick={Menu.onclick}
           >
             
-          {Menu.src!=="icon" ? <img src={`./src/assets/${Menu.src}.png`} />:open?  Menu.icon:<div className="w-full flex justify-center">{Menu.icon}</div>}
+          {Menu.src!=="icon" ? <img src={`/assets/${Menu.src}.png`} />:open?  Menu.icon:<div className="w-full flex justify-center">{Menu.icon}</div>}
             <span className={`${!open && "hidden"} origin-left duration-200`}>
               {Menu.title}
             </span>
