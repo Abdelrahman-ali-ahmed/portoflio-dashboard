@@ -8,7 +8,7 @@ const SideBar = () => {
         src="/assets/control.png"
         className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
          border-2 rounded-full ${!open && "rotate-180"}`}
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen()}
       />
       <div className="flex gap-x-4 items-center">
         <img

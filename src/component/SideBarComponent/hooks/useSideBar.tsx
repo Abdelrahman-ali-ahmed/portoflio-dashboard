@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { FaHandshake, FaLocationDot } from 'react-icons/fa6';
 import { IoSettingsOutline, IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
@@ -23,7 +22,6 @@ export default function useSideBar() {
   };
    const dark = useSelector((state: RootState) => state.dark.value);
    const login = useSelector((state: RootState) => state.login.value);
-   const role = useSelector((state: RootState) => state.role.value);
    const dispatch=useDispatch()
    const navigate = useNavigate();
     const handleLogout = async () => {
