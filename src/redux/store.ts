@@ -4,18 +4,20 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import sessionStorage from "redux-persist/lib/storage/session"; // 🧠 sessionStorage
 import loginReducer from "./slices/loginSlice";
 import roleReducer from "./slices/roleSlice";
+import openReducer from "./slices/openSlice";
 import darkReducer from "./slices/darkSlice"; // optional
 
 const rootReducer = combineReducers({
   login: loginReducer,
   role: roleReducer,
   dark: darkReducer,
+  open: openReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage: sessionStorage,
-  whitelist: ["login", "role", "dark"],
+  whitelist: ["login", "role", "dark","open"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

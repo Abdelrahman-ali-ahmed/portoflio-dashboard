@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FaHandshake, FaLocationDot } from 'react-icons/fa6';
-import { IoShareSocialSharp } from 'react-icons/io5';
+import { IoSettingsOutline, IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,11 +11,19 @@ import { auth } from "../../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { changeLogin } from '../../../redux/slices/loginSlice';
 import { changeRole } from '../../../redux/slices/roleSlice';
+import { CiFolderOn } from 'react-icons/ci';
+import { RiAccountBoxLine } from 'react-icons/ri';
+import { IoMdHome } from 'react-icons/io';
+import { changeOpen } from '../../../redux/slices/openSlice';
 
 export default function useSideBar() {
-     const [open, setOpen] = useState(false);
+  const open = useSelector((state: RootState) => state.open.value);
+  const setOpen = () => {
+    dispatch(changeOpen());
+  };
    const dark = useSelector((state: RootState) => state.dark.value);
    const login = useSelector((state: RootState) => state.login.value);
+   const role = useSelector((state: RootState) => state.role.value);
    const dispatch=useDispatch()
    const navigate = useNavigate();
     const handleLogout = async () => {
@@ -28,15 +36,15 @@ export default function useSideBar() {
       console.error("Error logging out:", error);
     }}
   const Menus = [
-    { title: "home", src: "Chart_fill" },
-    { title: "Accounts", src: "User",},
-    { title: "Files", src: "Folder",  },
-    { title: "Setting", src: "Setting" },
-    { title: "Contact", src: "icon" ,icon : <IoShareSocialSharp />},
-    { title: "Location", src: "icon" ,icon : <FaLocationDot />},
-    { title: "customer", src: "icon" ,icon : <FaHandshake /> },
+    { title: "home",icon:<IoMdHome />},
+    { title: "Accounts",icon:<RiAccountBoxLine />},
+    { title: "Files", icon:<CiFolderOn  />  },
+    { title: "Setting",icon:<IoSettingsOutline /> },
+    { title: "Contact", icon : <IoShareSocialSharp />},
+    { title: "Location",icon : <FaLocationDot />},
+    { title: "customer",    icon : <FaHandshake /> },
         { title: dark?"Lightmode":"Darkmode", src: "icon" ,icon : <MdOutlineDarkMode   /> ,onclick:()=>dispatch(changeDark   ())},
-        { title: dark?"Lightmode":"Darkmode", src: "icon" ,icon : <LuLogOut /> ,onclick:()=>handleLogout()},
+        { title: "Logout", src: "icon" ,icon : <LuLogOut /> ,onclick:()=>handleLogout()},
 
   ];
   return (
