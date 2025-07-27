@@ -5,6 +5,7 @@ import About from './page/About'
 import Contact from './page/Contact'
 import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
+import Location from './page/Location'
 
 function App() {
   return (
@@ -16,6 +17,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="location"
+          element={
+            <ProtectedRoute>
+              <Location   />
             </ProtectedRoute>
           }
         />
@@ -36,6 +45,7 @@ function App() {
           }
         />
       </Route>
+      
     </Routes>
   );
 }

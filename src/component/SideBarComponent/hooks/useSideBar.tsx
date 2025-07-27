@@ -34,12 +34,12 @@ export default function useSideBar() {
       console.error("Error logging out:", error);
     }}
   const Menus = [
-    { title: "home",icon:<IoMdHome />},
+    { title: "home",icon:<IoMdHome />,onclick:()=>navigate("/home")},
     { title: "Accounts",icon:<RiAccountBoxLine />},
     { title: "Files", icon:<CiFolderOn  />  },
     { title: "Setting",icon:<IoSettingsOutline /> },
-    { title: "Contact", icon : <IoShareSocialSharp />},
-    { title: "Location",icon : <FaLocationDot />},
+    { title: "Contact", icon : <IoShareSocialSharp /> ,onclick:()=>navigate("/contact")},
+    { title: "Location",icon : <FaLocationDot />,onclick:()=>navigate("/location")},
     { title: "customer",    icon : <FaHandshake /> },
         { title: dark?"Lightmode":"Darkmode", src: "icon" ,icon : <MdOutlineDarkMode   /> ,onclick:()=>dispatch(changeDark   ())},
         { title: "Logout", src: "icon" ,icon : <LuLogOut /> ,onclick:()=>handleLogout()},
