@@ -17,7 +17,7 @@ const navigate=useNavigate()
   const [loading, setLoading] = useState(false);
   const role=useSelector((state: RootState  ) => state.role.value);
    const lo=useSelector((state: RootState  ) => state.login.value);
-console.log(role,lo);
+
 const dispatch=useDispatch()
 
   const handleLogin = async () => {
@@ -38,7 +38,8 @@ const dispatch=useDispatch()
         alert("Login successful, but user role not found.");
       }
     } catch (err: any) {
-      setError(err.message);
+       console.error("Login Error:", err.code, err.message);
+  setError(err.message);
     } finally {
       setLoading(false);
     }
