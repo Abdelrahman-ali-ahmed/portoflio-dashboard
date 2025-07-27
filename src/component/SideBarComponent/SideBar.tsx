@@ -1,27 +1,7 @@
-import { useState } from "react";
-import { FaHandshake, FaLocationDot } from "react-icons/fa6";
-import { IoShareSocialSharp } from "react-icons/io5";
-import { MdOutlineDarkMode } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
-import { changeDark } from "../../redux/slices/darkSlice";
+import useSideBar from "./hooks/useSideBar";
 const SideBar = () => {
-  const [open, setOpen] = useState(false);
-   const dark = useSelector((state: RootState) => state.dark.value);
-   const dispatch=useDispatch()
-  const Menus = [
-    { title: "home", src: "Chart_fill" },
-    { title: "Accounts", src: "User",},
-    { title: "Files", src: "Folder",  },
-    { title: "Setting", src: "Setting" },
-    { title: "Contact", src: "icon" ,icon : <IoShareSocialSharp />},
-    { title: "Location", src: "icon" ,icon : <FaLocationDot />},
-    { title: "customer", src: "icon" ,icon : <FaHandshake /> },
-        { title: dark?"Lightmode":"Darkmode", src: "icon" ,icon : <MdOutlineDarkMode   /> ,onclick:()=>dispatch(changeDark ())},
-
-  ];
-console.log(dark);
-
+ const{open, setOpen, login,  Menus}=useSideBar()
+    if (!login) return null;
   return (
     <div
       className={`${
