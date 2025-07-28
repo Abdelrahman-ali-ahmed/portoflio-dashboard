@@ -7,6 +7,7 @@ import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
 import Location from './page/Location'
 import Customer from './page/Customer'
+import Files from './page/Files'
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Customer />
+            </ProtectedRoute>
+          }
+        />
+           <Route
+          path="files"
+          element={
+            <ProtectedRoute>
+              <Files />
             </ProtectedRoute>
           }
         />

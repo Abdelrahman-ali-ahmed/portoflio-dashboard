@@ -42,7 +42,7 @@ export default function useSideBar() {
   const Menus = [
     { title: "home", icon: <IoMdHome />, onclick: () => navigate("/home") },
     { title: "Accounts", icon: <RiAccountBoxLine /> },
-    { title: "Files", icon: <CiFolderOn /> },
+    { title: "Files", icon: <CiFolderOn /> ,onclick: () => navigate("/files") },
     { title: "Setting", icon: <IoSettingsOutline /> },
     { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
     { title: "Location", icon: <FaLocationDot />, onclick: () => navigate("/location") },
