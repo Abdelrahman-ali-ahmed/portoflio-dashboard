@@ -6,6 +6,7 @@ import Contact from './page/Contact'
 import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
 import Location from './page/Location'
+import Customer from './page/Customer'
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Contact />
+            </ProtectedRoute>
+          }
+        />
+          <Route
+          path="customer"
+          element={
+            <ProtectedRoute>
+              <Customer />
             </ProtectedRoute>
           }
         />

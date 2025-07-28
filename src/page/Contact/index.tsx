@@ -15,12 +15,12 @@ export default function Contact() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className={`p-4 min-h-screen ${isDark ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+    <div className={`p-4 min-h-screen ${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} duration-300`}>
       <h1 className={`text-3xl font-bold mb-6 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
         Edit Contact Info
       </h1>
 
-      <div className={`p-4 rounded ${isDark ? "bg-gray-800" : "bg-gray-100"}`}>
+      <div className={`p-4 rounded ${isDark ? "bg-gray-800" : "bg-gray-100"} duration-300`}>
         {info.map((field, index) => (
           <div key={index} className="mb-4">
             <label

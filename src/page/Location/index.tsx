@@ -19,7 +19,7 @@ export default function Location() {
     isDark ? "bg-[#1f2937] border-gray-600 text-white" : "bg-white border-gray-300 text-black"
   }`;
 
-  const containerClass = `p-4 min-h-screen ${
+  const containerClass = `p-4 min-h-screen duration-300 ${
     isDark ? "bg-[#111827] text-white" : "bg-white text-blue-500"
   }`;
 

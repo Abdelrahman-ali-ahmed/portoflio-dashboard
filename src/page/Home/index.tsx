@@ -3,7 +3,7 @@ import useHome from "./hooks/useHome";
 export default function Home() {
 const {isDark, contentHome, title, handleTitleChange, handleContentChange, handleSubmit}=useHome()
   return (
-    <div className={`p-4 min-h-screen ${isDark ? "bg-gray-900 text-white" : "bg-white text-black"}`}>
+    <div className={`p-4 min-h-screen ${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} duration-300`}>
       <h1 className={`text-3xl font-bold mb-6 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
         Home Page
       </h1>

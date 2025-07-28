@@ -14,3 +14,9 @@ export interface ContactFormType {
   facebook: string;
   instagram: string;
 }
+export type CustomerType = {
+  id: string;
+  name: string;
+  logo: string;
+  createdAt?: Date;
+};
