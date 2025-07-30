@@ -8,6 +8,9 @@ import ProtectedRoute from './component/ProtectedRoute'
 import Location from './page/Location'
 import Customer from './page/Customer'
 import Files from './page/Files'
+import Data from './page/Data'
+import AddData from './page/Data/page/Add/AddData'
+import EditData from './page/Data/page/Edit/EditData'
 
 function App() {
   return (
@@ -62,6 +65,31 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="data"
+          element={
+            <ProtectedRoute>
+              <Data/>
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="data/add"
+          element={
+            <ProtectedRoute>
+              <AddData/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="data/edit:id"
+          element={
+            <ProtectedRoute>
+              <EditData/>
+            </ProtectedRoute>
+          }
+        />
+
       </Route>
       
     </Routes>

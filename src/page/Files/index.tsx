@@ -16,7 +16,7 @@ export default function Files() {
     loading,
     isDark,
   } = useLinks();
-  /////
+  
   const baseInputClass =
     "flex-1 p-2 border rounded focus:outline-none focus:ring transition";
   const inputClass = `${baseInputClass} ${

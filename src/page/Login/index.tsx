@@ -4,6 +4,7 @@ import Uselogin from "./hook/Uselogin";
 const Login = () => {
   const  {email, setEmail, password, setPassword, error,  loading, handleLogin}=Uselogin()
 console.log(error);
+console.log(password);
 
   return (
     <div className="flex flex-col w-80 mx-auto mt-20 gap-4">

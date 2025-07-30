@@ -1,15 +1,13 @@
-import { FaHandshake, FaLocationDot } from 'react-icons/fa6';
-import { IoSettingsOutline, IoShareSocialSharp } from 'react-icons/io5';
+import { FaDatabase, FaHandshake, FaLocationDot } from 'react-icons/fa6';
+import {  IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import { CiFolderOn } from 'react-icons/ci';
 import { RiAccountBoxLine } from 'react-icons/ri';
 import { IoMdHome } from 'react-icons/io';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-
 import type { RootState } from '../../../redux/store';
 import { auth } from '../../../firebase/firebase';
 import { changeDark } from '../../../redux/slices/darkSlice';
@@ -25,6 +23,7 @@ export default function useSideBar() {
   const open = useSelector((state: RootState) => state.open.value);
   const dark = useSelector((state: RootState) => state.dark.value);
   const login = useSelector((state: RootState) => state.login.value);
+  const role = useSelector((state: RootState) => state.role.value);
 
   const setOpen = () => dispatch(changeOpen());
 
@@ -38,28 +37,31 @@ export default function useSideBar() {
       console.error("Error logging out:", error);
     }
   };
+console.log(role);
+const Menus = [
+  { title: "home", icon: <IoMdHome />, onclick: () => navigate("/home") },
+  ...(role === "master"
+    ? [{ title: "Accounts", icon: <RiAccountBoxLine />, onclick: () => navigate("/accounts") }]
+    : []),
+  { title: "Files", icon: <CiFolderOn />, onclick: () => navigate("/files") },
+  { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
+  { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
+  { title: "Location", icon: <FaLocationDot />, onclick: () => navigate("/location") },
+  { title: "customer", icon: <FaHandshake />, onclick: () => navigate("/customer") },
+  {
+    title: dark ? "Lightmode" : "Darkmode",
+    icon: <MdOutlineDarkMode />,
+    onclick: () => dispatch(changeDark()),
+  },
+  {
+    title: "Logout",
+    icon: <LuLogOut />,
+    onclick: handleLogout,
+  },
+];
 
-  const Menus = [
-    { title: "home", icon: <IoMdHome />, onclick: () => navigate("/home") },
-    { title: "Accounts", icon: <RiAccountBoxLine /> },
-    { title: "Files", icon: <CiFolderOn /> ,onclick: () => navigate("/files") },
-    { title: "Setting", icon: <IoSettingsOutline /> },
-    { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
-    { title: "Location", icon: <FaLocationDot />, onclick: () => navigate("/location") },
-    { title: "customer", icon: <FaHandshake />, onclick: () => navigate("/customer") },
-    {
-      title: dark ? "Lightmode" : "Darkmode",
-      icon: <MdOutlineDarkMode />,
-      onclick: () => dispatch(changeDark()),
-    },
-    {
-      title: "Logout",
-      icon: <LuLogOut />,
-      onclick: handleLogout,
-    },
-  ];
 
  
 
-  return { open, setOpen, dark, login, Menus, location };
+  return { open, setOpen, dark, login, Menus, location};
 }
