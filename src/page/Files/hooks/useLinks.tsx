@@ -18,22 +18,28 @@ import { useSelector } from "react-redux";
 export const useLinks = () => {
   const [links, setLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingComponenet, setLoadingComponenet] = useState(false);
   const [form, setForm] = useState({ name: "", url: "" });
   const [editId, setEditId] = useState<string | null>(null);
+ const getLinks = () => {
+  setLoadingComponenet(true);
+  const q = query(collection(db, "links"), orderBy("createdAt", "desc"));
 
-  const getLinks = () => {
-    const q = query(collection(db, "links"), orderBy("createdAt", "desc"));
-    const unsub = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setLinks(data);
-    });
-    return unsub;
-  };
+  const unsub = onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setLinks(data);
+    setLoadingComponenet(false); // ✅
+  });
+
+  return unsub;
+};
+
 
   useEffect(() => {
+    
     const unsub = getLinks();
     return () => unsub();
   }, []);
@@ -120,6 +126,7 @@ return {
   updateValue,
   formatDate,
   startEdit,
+  loadingComponenet,
   editId,
   isDark,
   setEditId,

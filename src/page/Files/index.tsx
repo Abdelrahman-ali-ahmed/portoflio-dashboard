@@ -1,4 +1,5 @@
 
+import Loading from "../../component/loading";
 import { useLinks } from "./hooks/useLinks";
 export default function Files() {
   const {
@@ -11,6 +12,7 @@ export default function Files() {
     editLink,
     updateValue,
     setEditId,
+    loadingComponenet,
     startEdit,
     editId,
     loading,
@@ -31,7 +33,12 @@ export default function Files() {
   const tableHeaderClass = `${isDark ? "bg-gray-800" : "bg-gray-200"}`;
   const tableBorderClass = `${isDark ? "border-gray-700" : "border-gray-300"}`;
   const hoverRow = `${isDark ? "hover:bg-gray-800" : "hover:bg-gray-50"}`;
-
+    console.log(loadingComponenet);
+    
+if(  loadingComponenet)
+{
+  return <div className="w-full h-screen flex justify-center items-center "><Loading/> </div> ;
+}
   return (
     <div className={containerClass}>
       <h2 className={`text-2xl font-bold mb-4 ${headerClass}`}>Link Manager</h2>

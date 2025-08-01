@@ -7,7 +7,7 @@ import { fetchHomeData } from './fetchHomeData';
 
 export default function useHome() {
   const isDark = useSelector((state: RootState) => state.dark.value);
-
+ const [loading, setLoading] = useState(false);
   const [contentHome, setContentHome] = useState({
     eng: '',
     ar: ''
@@ -20,10 +20,12 @@ export default function useHome() {
 
    useEffect(() => {
   const loadData = async () => {
+    setLoading(true);
     const data = await fetchHomeData();
     if (data) {
       setContentHome(data.content);
       setTitle(data.title);
+      setLoading(false)
     } else {
       console.warn("No data found in /content/home.");
     }
@@ -44,8 +46,10 @@ console.log(contentHome,title);
   };
 
 const handleSubmit = async (e: React.FormEvent) => {
+   setLoading(true);
   e.preventDefault();
   try {
+    setLoading(true);
     const homeRef = doc(db, "content", "home");
     await updateDoc (homeRef, {
       title,
@@ -54,6 +58,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     alert("Data updated successfully!");
   } catch (error) {
     console.error("Error updating document:", error);
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -63,6 +69,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     setContentHome,
     title,
     setTitle,
+    loading,
     handleTitleChange,
     handleContentChange,
     handleSubmit
