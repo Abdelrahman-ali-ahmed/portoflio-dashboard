@@ -9,11 +9,14 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
+import { generateSHA1 } from "../../../component/generateSHA1/generateSHA1";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store";
 
 export const useData = () => {
   const [dataItems, setDataItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const isDark=useSelector((state: RootState) => state.dark.value);
   useEffect(() => {
     const q = query(collection(db, "data"), orderBy("createdAt", "desc"));
     const unsub = onSnapshot(q, (snapshot) => {
@@ -31,7 +34,6 @@ const deleteData = async (id: string, publicId?: string) => {
   if (!window.confirm("Are you sure?")) return;
   setLoading(true);
   try {
-    // 🔁 1. Delete image from Cloudinary if publicId is available
     if (publicId) {
       const cloudName = "dfe962gp1";
       const timestamp = Math.floor(Date.now() / 1000);
@@ -40,6 +42,7 @@ const deleteData = async (id: string, publicId?: string) => {
 
       const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
       const signature = await generateSHA1(stringToSign);
+console.log(publicId);
 
       const formData = new FormData();
       formData.append("public_id", publicId);
@@ -47,13 +50,16 @@ const deleteData = async (id: string, publicId?: string) => {
       formData.append("timestamp", timestamp.toString());
       formData.append("signature", signature);
 
-      await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
         method: "POST",
         body: formData,
       });
+
+      const result = await res.json();
+      console.log("Cloudinary delete response:", result);
     }
 
-    // 🔁 2. Delete the Firestore document
+    // 2. Delete from Firestore
     await deleteDoc(doc(db, "data", id));
   } catch (err) {
     console.error("Delete failed:", err);
@@ -62,14 +68,9 @@ const deleteData = async (id: string, publicId?: string) => {
   }
 };
 
-const generateSHA1 = async (message: string) => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-1", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-};
 
 
-  return { dataItems, deleteData, loading };
+
+
+  return { dataItems, deleteData, loading,isDark };
 };

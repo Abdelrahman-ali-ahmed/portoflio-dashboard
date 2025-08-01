@@ -16,7 +16,7 @@ export interface ContactFormType {
 }
 export type CustomerType = {
   id: string;
-  name: string;
+  name: {eng:string,ar:string};
   logo: string;
   createdAt?: Date;
 };

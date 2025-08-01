@@ -4,6 +4,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../../../firebase/firebase";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../../redux/store";
+import { useNavigate } from "react-router-dom";
 
 export const useAdd = () => {
   const [form, setForm] = useState({
@@ -14,7 +15,7 @@ export const useAdd = () => {
   });
   const [loading, setLoading] = useState(false);
   const isDark = useSelector((state: RootState) => state.dark.value);
-
+ const navigate=useNavigate()
   // Upload image to Cloudinary
   const uploadToCloudinary = async (): Promise<{
     url: string;
@@ -78,6 +79,7 @@ export const useAdd = () => {
         image: null,
       });
       alert("Added successfully");
+      navigate(-1)
     } catch (err) {
       console.error(err);
       alert("Failed to add data");

@@ -41,7 +41,7 @@ const SideBar = () => {
             onClick={Menu.onclick}
           >
             {open ? (
-              <div className={`text-2xl ${location.pathname==`/${Menu.title.toLocaleLowerCase()}`?"text-blue-500 dark:text-blue-400 ":""} `}>{Menu.icon}</div>
+              <div className={`text-2xl ${location.pathname.includes(Menu.title.toLocaleLowerCase())?"text-blue-500 dark:text-blue-400 ":""} `}>{Menu.icon}</div>
             ) : (
               <div className={`w-full flex justify-center text-3xl ${location.pathname==`/${Menu.title.toLocaleLowerCase()}`?"text-blue-500 dark:text-blue-400 ":""} `}>{Menu.icon}</div>
             )}

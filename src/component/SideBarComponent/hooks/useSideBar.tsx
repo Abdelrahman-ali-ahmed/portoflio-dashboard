@@ -3,7 +3,6 @@ import {  IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import { CiFolderOn } from 'react-icons/ci';
-import { RiAccountBoxLine } from 'react-icons/ri';
 import { IoMdHome } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -40,9 +39,6 @@ export default function useSideBar() {
 console.log(role);
 const Menus = [
   { title: "home", icon: <IoMdHome />, onclick: () => navigate("/home") },
-  ...(role === "master"
-    ? [{ title: "Accounts", icon: <RiAccountBoxLine />, onclick: () => navigate("/accounts") }]
-    : []),
   { title: "Files", icon: <CiFolderOn />, onclick: () => navigate("/files") },
   { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
   { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },

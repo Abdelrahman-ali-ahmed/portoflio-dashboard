@@ -12,6 +12,7 @@ import Data from './page/Data'
 import AddData from './page/Data/page/Add/AddData'
 import EditData from './page/Data/page/Edit/EditData'
 
+
 function App() {
   return (
     <Routes>
@@ -73,6 +74,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
          <Route
           path="data/add"
           element={
@@ -81,14 +83,15 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="data/edit:id"
-          element={
-            <ProtectedRoute>
-              <EditData/>
-            </ProtectedRoute>
-          }
-        />
+    <Route
+  path="data/edit/:id"
+  element={
+    <ProtectedRoute>
+      <EditData />
+    </ProtectedRoute>
+  }
+/>
+
 
       </Route>
       
