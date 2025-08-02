@@ -16,8 +16,10 @@ import type { RootState } from "../../../redux/store";
 export const useData = () => {
   const [dataItems, setDataItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingComponent, setLoadingComponent] = useState(false);
   const isDark=useSelector((state: RootState) => state.dark.value);
   useEffect(() => {
+    setLoadingComponent(true);
     const q = query(collection(db, "data"), orderBy("createdAt", "desc"));
     const unsub = onSnapshot(q, (snapshot) => {
       const result = snapshot.docs.map((doc) => ({
@@ -25,6 +27,7 @@ export const useData = () => {
         ...doc.data(),
       }));
       setDataItems(result);
+      setLoadingComponent(false);
     });
 
     return () => unsub();
@@ -72,5 +75,5 @@ console.log(publicId);
 
 
 
-  return { dataItems, deleteData, loading,isDark };
+  return { dataItems, deleteData, loading,isDark,loadingComponent };
 };

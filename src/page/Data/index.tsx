@@ -1,9 +1,10 @@
 // src/pages/Data.tsx
 import { Link } from "react-router-dom";
 import { useData } from "./hooks/useData";
+import Loading from "../../component/loading";
 
 export default function Data() {
-  const { dataItems, deleteData, loading, isDark } = useData();
+  const { dataItems, deleteData, loading, isDark,loadingComponent } = useData();
 
   const containerClass = `min-h-screen p-6 duration-300 ${
     isDark ? "bg-[#0f172a] text-white" : "bg-gray-50 text-gray-900"
@@ -12,6 +13,10 @@ export default function Data() {
   const tableBorder = isDark ? "border-gray-700" : "border-gray-300";
   const tableHead = isDark ? "bg-gray-800 text-white" : "bg-gray-200 text-black";
   const hoverRow = isDark ? "hover:bg-gray-800" : "hover:bg-gray-100";
+  if(  loadingComponent)
+{
+  return <div className="w-full h-screen flex justify-center items-center "><Loading   /> </div> ;
+}
 
   return (
     <div className={containerClass}>
