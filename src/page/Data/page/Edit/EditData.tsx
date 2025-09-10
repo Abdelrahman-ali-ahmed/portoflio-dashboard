@@ -4,7 +4,7 @@ import useEditData from "./hook/useEditData";
 
 
 export default function EditData() {
- const { form, setForm, setImage,navigate, loading, handleUpdate, isDark, loadingComponent, fixedCategories } =
+ const { form, setForm, setImage,navigate , loading, handleUpdate, isDark, loadingComponent, fixedCategories } =
     useEditData();
 
   const inputClass = `border p-2 rounded-md w-full ${
