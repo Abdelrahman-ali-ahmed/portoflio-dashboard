@@ -7,6 +7,7 @@ console.log(error);
 console.log(password);
 
   return (
+    
     <div className="flex flex-col w-80 mx-auto mt-20 gap-4">
       <h2 className="text-xl font-bold">Login</h2>
       <input
@@ -32,7 +33,11 @@ console.log(password);
       </button>
       {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
+    
+
   );
+
+  
 };
 
 export default Login;

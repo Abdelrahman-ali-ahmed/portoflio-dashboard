@@ -18,7 +18,6 @@ export default function useSideBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const open = useSelector((state: RootState) => state.open.value);
   const dark = useSelector((state: RootState) => state.dark.value);
   const login = useSelector((state: RootState) => state.login.value);
