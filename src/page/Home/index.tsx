@@ -11,18 +11,18 @@ if(loading)
   return <div className="w-full h-screen flex justify-center items-center "><Loading/> </div> ;
 }
   return (
-    <div className={`p-4 min-h-screen ${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} duration-300`}>
-      <h1 className={`text-3xl font-bold mb-6 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+    <div className={`p-4 min-h-screen bg-transparent ${isDark ? " text-white" : " text-black"} duration-300`}>
+      <h1 className={`text-3xl font-bold mb-6 ${isDark ? "text-white" : "text-black"}`}>
         Home Page
       </h1>
 
-      <div className={`p-4 rounded ${isDark ? "bg-gray-800" : "bg-gray-100"}`}>
-        <p>This should appear as first thing in landing page</p>
+      <div className={`p-4 rounded bg-transparent`}>
+        <p className={`${isDark ? "text-white" : "text-gray-800"}`}>This should appear as first thing in landing page</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-        <div>
-          <label htmlFor="title-eng" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-blue-600"}`}>
+      <form onSubmit={handleSubmit} className={`space-y-6 mt-6 i${isDark ? "text-white" : "text-black"}`}>
+        <div className={`${isDark ? "text-white" : "text-black"}`}>
+          <label htmlFor="title-eng" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>
             Title (English)
           </label>
           <input
@@ -30,15 +30,16 @@ if(loading)
             type="text"
             value={title.eng}
             onChange={(e) => handleTitleChange("eng", e.target.value)}
-            className="block w-full p-2 text-sm text-gray-900 bg-gray-50 border border-gray-300 
-              rounded-lg focus:ring-blue-500 focus:border-blue-500 
-              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`block w-full p-2 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 
+              ${isDark 
+                ? "bg-white/10 border-gray-600 placeholder-gray-400 text-white" 
+                : "bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500"
+              }`}
             placeholder="Enter English title"
           />
         </div>
         <div>
-          <label htmlFor="title-ar" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-blue-600"}`}>
+          <label htmlFor="title-ar" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>
             Title (Arabic)
           </label>
           <input
@@ -47,15 +48,16 @@ if(loading)
             dir="rtl"
             value={title.ar}
             onChange={(e) => handleTitleChange("ar", e.target.value)}
-            className="block w-full p-2 text-sm text-gray-900 bg-gray-50 border border-gray-300 
-              rounded-lg focus:ring-blue-500 focus:border-blue-500 
-              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`block w-full p-2 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 
+              ${isDark 
+                ? "bg-white/10 border-gray-600 placeholder-gray-400 text-white" 
+                : "bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500"
+              }`}
             placeholder="أدخل العنوان بالعربية"
           />
         </div>
         <div>
-          <label htmlFor="message-eng" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-blue-600"}`}>
+          <label htmlFor="message-eng" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>
             Message (English)
           </label>
           <textarea
@@ -63,17 +65,18 @@ if(loading)
             rows={4}
             value={contentHome.eng}
             onChange={(e) => handleContentChange("eng", e.target.value)}
-            className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 
-              rounded-lg focus:ring-blue-500 focus:border-blue-500 
-              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`block w-full p-2.5 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 
+              ${isDark 
+                ? "bg-white/10 border-gray-600 placeholder-gray-400 text-white" 
+                : "bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500"
+              }`}
             placeholder="Write your message in English"
           />
         </div>
 
         {/* Message Arabic */}
         <div>
-          <label htmlFor="message-ar" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-blue-600"}`}>
+          <label htmlFor="message-ar" className={`block mb-2 text-sm font-medium ${isDark ? "text-white" : "text-black"}`}>
             Message (Arabic)
           </label>
           <textarea
@@ -82,16 +85,21 @@ if(loading)
             rows={4}
             value={contentHome.ar}
             onChange={(e) => handleContentChange("ar", e.target.value)}
-            className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 
-              rounded-lg focus:ring-blue-500 focus:border-blue-500 
-              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`block w-full p-2.5 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500 
+              ${isDark 
+                ? "bg-white/10 border-gray-600 placeholder-gray-400 text-white" 
+                : "bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500"
+              }`}
             placeholder="اكتب رسالتك بالعربية"
           />
         </div>
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className={`px-4 py-2 rounded transition-colors duration-200 ${
+            isDark 
+              ? "bg-white text-black hover:bg-blue-500  font-bold " 
+              : "bg-black text-white hover:bg-blue-600 font-bold"
+          }`}
         >
           Submit
         </button>

@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import SideBar from '../component/SideBarComponent/SideBar'
 import { useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
+import NetworkAnimation from '../component/Networkgraph';
 
 
 export default function MainLayout() {
@@ -11,8 +12,11 @@ const login = useSelector((state: RootState) => state.login.value);
   return (
     <div className="flex min-h-screen">
       <SideBar />
-      <div className={`flex-1 p-7  ${isDark?"bg-[#111827] text-white":"bg-white text-blue-500 "} ${login?open?"ml-70":"ml-20":"" } duration-300`}>
-        <Outlet />
+      <div className={`flex-1 p-7 relative ${isDark?"bg-[#000] text-white":"bg-white text-blue-500 "} ${login?open?"ml-70":"ml-20":"" } duration-300`}>
+        <NetworkAnimation />
+        <div className="relative z-10">
+          <Outlet />
+        </div>
       </div>
     </div>
   )
