@@ -7,10 +7,10 @@ import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
 import Location from './page/Location'
 import Customer from './page/Customer'
-import Files from './page/Files'
 import Data from './page/Data'
 import AddData from './page/Data/page/Add/AddData'
 import EditData from './page/Data/page/Edit/EditData'
+import Cvs from './page/Cvs'
 
 
 function App() {
@@ -60,10 +60,10 @@ function App() {
           }
         />
            <Route
-          path="files"
+          path="cvs"
           element={
             <ProtectedRoute>
-              <Files />
+              <Cvs />
             </ProtectedRoute>
           }
         />

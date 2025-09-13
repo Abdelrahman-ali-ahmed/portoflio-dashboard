@@ -15,7 +15,7 @@ import { db } from "../../../firebase/firebase"; // Adjust path
 import type { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 
-export const useLinks = () => {
+export const useCvs = () => {
   const [links, setLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingComponenet, setLoadingComponenet] = useState(false);

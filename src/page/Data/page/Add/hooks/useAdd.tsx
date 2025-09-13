@@ -10,6 +10,8 @@ export const useAdd = () => {
   const [form, setForm] = useState({
     title: { ar: "", eng: "" },
     content: { ar: "", eng: "" },
+    liveLink: "",
+    src:"",
     category: "",
     image: null as File | null,
   });
@@ -75,6 +77,8 @@ export const useAdd = () => {
       setForm({
         title: { ar: "", eng: "" },
         content: { ar: "", eng: "" },
+        liveLink: "",
+        src:"",
         category: "",
         image: null,
       });

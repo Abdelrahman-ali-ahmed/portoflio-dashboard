@@ -27,7 +27,7 @@ console.log(password);
       <button
         onClick={handleLogin}
         disabled={loading}
-        className="p-2 bg-blue-600 text-white rounded"
+        className="p-2 bg-white text-black rounded font-bold hover:bg-transparent hover:text-white hover:border "
       >
         {loading ? "Logging in..." : "Login"}
       </button>

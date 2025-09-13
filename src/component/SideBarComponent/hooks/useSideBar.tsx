@@ -37,8 +37,8 @@ export default function useSideBar() {
   };
 console.log(role);
 const Menus = [
-  { title: "home", icon: <IoMdHome />, onclick: () => navigate("/home") },
-  { title: "Files", icon: <CiFolderOn />, onclick: () => navigate("/files") },
+  { title: "Home", icon: <IoMdHome />, onclick: () => navigate("/home") },
+  { title: "Cvs", icon: <CiFolderOn />, onclick: () => navigate("/cvs") },
   { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
   { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
   { title: "Location", icon: <FaLocationDot />, onclick: () => navigate("/location") },

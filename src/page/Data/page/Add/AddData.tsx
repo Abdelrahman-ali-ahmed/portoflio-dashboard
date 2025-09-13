@@ -2,15 +2,12 @@
 import { useAdd } from "./hooks/useAdd";
 
 const fixedCategories = [
-  "Counter",
-  "Chairs",
-  "Complete Sets",
-  "Manager's Desk",
-  "Employee Desk",
-  "Meeting Table",
-  "Catering Table",
-  "Workstation",
-  "Storage Unit",
+  "Html + Css",
+  "Html + js + Css",
+  "React",
+  "React + vite",
+  "Next",
+
 ];
 
 export default function AddData() {
@@ -18,12 +15,12 @@ export default function AddData() {
 
   const inputClass = `${
     isDark
-      ? "bg-gray-800 text-white border-gray-600"
-      : "bg-white text-black border-gray-300"
+      ? `bg-black/90 text-white placeholder-gray-300 border-gray-600`
+      : "bg-white text-black placeholder-gray-600 border-gray-300"
   } border p-2 rounded-md w-full`;
 
   return (
-    <div className="bg-white dark:bg-[#1f2937] shadow-md rounded-xl p-4 w-full max-w-3xl mx-auto mb-6 space-y-4 border dark:border-gray-700">
+    <div className={`${isDark ? "bg-white text-black" : "bg-black text-white"} shadow-md rounded-xl p-4 w-full max-w-3xl mx-auto mb-6 space-y-4 border dark:border-gray-700`}>
       <div className="grid grid-cols-2 gap-4">
         <input
           type="text"
@@ -48,6 +45,31 @@ export default function AddData() {
           }
           placeholder="Title (Arabic)"
           className={inputClass}
+        />
+                <input
+          type="text"
+          value={form.liveLink}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              liveLink: e.target.value,
+            })
+          }
+          placeholder="Live Link"
+          className={`${inputClass} col-span-2`}
+        />
+        
+        <input
+          type="text"
+          value={form.title.ar}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              src: e.target.value,
+            })
+          }
+          placeholder="Source Code"
+          className={`${inputClass} col-span-2`}
         />
 
         <textarea
@@ -88,19 +110,27 @@ export default function AddData() {
           ))}
         </select>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setForm({ ...form, image: e.target.files?.[0] || null })}
-          className="col-span-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        />
+       <input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setForm({ ...form, image: e.target.files?.[0] || null })
+  }
+  className={`col-span-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-transparent file:text-sm file:font-semibold
+    ${
+      isDark
+        ? "file:bg-gray-800 file:text-white hover:file:bg-white hover:file:text-black hover:file:border-gray-500"
+        : "file:bg-white file:text-black hover:file:bg-black hover:file:text-white hover:file:border-gray-400"
+    }`}
+ />
+
       </div>
 
       <div className="flex justify-end">
         <button
           onClick={addData}
           disabled={loading}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          className={`border border-transparent font-bold ${isDark?"bg-black text-white hover:bg-white hover:text-black hover:border-black" : "bg-white text-black hover:bg-black hover:text-white hover:border-white  "}  px-6 py-2 rounded  transition`}
         >
           {loading ? "Saving..." : "Add Data"}
         </button>

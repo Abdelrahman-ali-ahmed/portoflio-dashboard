@@ -2,6 +2,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa6
 import useContact from "./hooks/useContact";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
+import Loading from "../../component/loading";
 
 export default function Contact() {
   const { form, handleChange, handleSave, saving, loading, isDark } = useContact();
@@ -16,24 +17,25 @@ export default function Contact() {
   ];
 
   const containerClass = `p-6 min-h-screen duration-300 ${
-    isDark ? "bg-[#0f172a] text-white" : "bg-gray-50 text-gray-900"
-  }`;
+    isDark ? " text-white" : " text-black"
+  } bg-transparen`;
 
-  const cardClass = `p-6 rounded-lg shadow-sm duration-300 ${
-    isDark ? "bg-gray-800" : "bg-white"
-  }`;
+  const cardClass = `p-6 rounded-lg shadow-sm duration-300 bg-transparent`;
 
-  const inputClass = `block w-full p-2 text-sm rounded-md border transition focus:outline-none focus:ring focus:ring-blue-500 ${
+  const inputClass = `block w-full p-2 text-sm rounded-md border transition  focus:ring focus:ring-transparent ${
     isDark
-      ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-      : "bg-gray-50 border-gray-300 text-black"
+      ? "bg-white/10 border-gray-600 text-white placeholder-gray-400"
+      : "bg-white/50 border-gray-300 text-black"
   }`;
 
-  if (loading) return <p className="p-6 text-lg">Loading...</p>;
+ if(loading)
+ {
+   return <div className="w-full h-screen flex justify-center items-center "><Loading/> </div> ;
+ }
 
   return (
     <div className={containerClass}>
-      <h1 className="text-3xl font-bold mb-6 text-blue-500">Edit Contact Info</h1>
+      <h1 className={`text-3xl font-bold mb-6 ${isDark ? "text-white" : "text-black"}`}>Edit Contact Info</h1>
 
       <div className={cardClass}>
         {info.map((field, index) => (
@@ -41,7 +43,7 @@ export default function Contact() {
             <label
               htmlFor={field.title}
               className={`block mb-2 text-sm font-medium ${
-                isDark ? "text-white" : "text-blue-600"
+                isDark ? "text-white" : "text-black"
               }`}
             >
               <span className="inline-flex items-center gap-2">
@@ -64,7 +66,8 @@ export default function Contact() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          className={`mt-4 px-4 py-2  ${ isDark ? "bg-white text-black hover:text-white" : "bg-black text-white hover:text-black"
+          }  rounded hover:bg-transparent hover:border transition font-bold`}
         >
           {saving ? "Saving..." : "Save"}
         </button>
