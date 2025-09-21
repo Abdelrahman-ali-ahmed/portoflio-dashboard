@@ -2,26 +2,29 @@
 import { Link } from "react-router-dom";
 import { useData } from "./hooks/useData";
 import Loading from "../../component/loading";
+import { Table } from "../../component/Table";
 
 export default function Data() {
-  const { dataItems, deleteData, loading, isDark,loadingComponent } = useData();
+  const { dataItems, deleteData, loading, isDark, loadingComponent } = useData();
 
   const containerClass = `min-h-screen p-6 duration-300 ${
-    isDark ? "bg-[#0f172a] text-white" : "bg-gray-50 text-gray-900"
+    isDark ? "bg-transparent text-white" : "bg-gray-50 text-gray-900"
   }`;
 
-  const tableBorder = isDark ? "border-gray-700" : "border-gray-300";
-  const tableHead = isDark ? "bg-gray-800 text-white" : "bg-gray-200 text-black";
-  const hoverRow = isDark ? "hover:bg-gray-800" : "hover:bg-gray-100";
-  if(  loadingComponent)
-{
-  return <div className="w-full h-screen flex justify-center items-center "><Loading   /> </div> ;
-}
+
+
+  if (loadingComponent) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className={containerClass}>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-blue-500">Data Management</h1>
+        <h1 className={`text-2xl font-bold ${isDark?"text-white" : "text-black"}`}>Data Management</h1>
         <Link
           to="/data/add"
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition shadow"
@@ -41,56 +44,56 @@ export default function Data() {
           No data items found.
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg shadow-sm">
-          <table className={`w-full text-sm border ${tableBorder}`}>
-            <thead className={tableHead}>
-              <tr>
-                <th className={`p-3 border ${tableBorder} text-left`}>Title (EN)</th>
-                <th className={`p-3 border ${tableBorder} text-left`}>Category</th>
-                <th className={`p-3 border ${tableBorder} text-left`}>Image</th>
-                <th className={`p-3 border ${tableBorder} text-left`}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataItems.map((item) => (
-                <tr key={item.id} className={`${hoverRow} border-b ${tableBorder}`}>
-                  <td className={`p-3 border ${tableBorder}`}>{item.title.eng}</td>
-                  <td className={`p-3 border ${tableBorder}`}>{item.category}</td>
-                  <td className={`p-3 border ${tableBorder}`}>
-                    <img
-                      src={item.imageUrl}
-                      alt="Data item"
-                      className="h-12 w-12 object-cover rounded shadow-sm"
-                    />
-                  </td>
-                  <td className={`p-3 border ${tableBorder} space-x-2`}>
-                    <Link
-                      to={`/data/edit/${item.id}`}
-                      className="text-yellow-400 hover:underline"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => deleteData(item.id, item.publicId)}
-                      disabled={loading}
-                      className="text-red-500 hover:underline disabled:opacity-50"
-                    >
-                      Delete
-                    </button>
-                    <a
-                      href={item.imageUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:underline"
-                    >
-                      View Image
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          data={dataItems}
+         
+          columns={[
+            { header: "Title (EN)", accessor: (row) => row.title.eng },
+            { header: "Category", accessor: (row) => row.category },
+            {
+              header: "Image",
+              accessor: (row) => (
+                <img
+                  src={row.imageUrl}
+                  alt="Data item"
+                  className="h-12 w-12 object-cover rounded shadow-sm"
+                />
+              ),
+            },
+            {
+              header: "Actions",
+              accessor: (row) => (
+                <div className="flex flex-wrap gap-2">
+                  <Link
+                    to={`/data/edit/${row.id}`}
+                    className="px-2 py-1 text-xs rounded bg-yellow-500 hover:bg-yellow-600 text-white"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => deleteData(row.id, row.publicId)}
+                    disabled={loading}
+                    className={`px-2 py-1 text-xs rounded ${
+                      loading
+                        ? "bg-red-300 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600"
+                    } text-white`}
+                  >
+                    Delete
+                  </button>
+                  <a
+                    href={row.imageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2 py-1 text-xs rounded bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    View
+                  </a>
+                </div>
+              ),
+            },
+          ]}
+        />
       )}
     </div>
   );

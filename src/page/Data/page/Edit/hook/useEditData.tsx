@@ -5,19 +5,15 @@ import type { RootState } from "../../../../../redux/store";
 import { useEffect, useState } from "react";
 import { db } from "../../../../../firebase/firebase";
 
-
 export default function useEditData() {
-    const fixedCategories = [
-  "Counter",
-  "Chairs",
-  "Complete Sets",
-  "Manager's Desk",
-  "Employee Desk",
-  "Meeting Table",
-  "Catering Table",
-  "Workstation",
-  "Storage Unit",
-];
+  const fixedCategories = [
+    "Html + Css",
+    "Html + js + Css",
+    "React",
+    "React + vite",
+    "Next",
+  ];
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isDark = useSelector((state: RootState) => state.dark.value);
@@ -25,6 +21,8 @@ export default function useEditData() {
   const [form, setForm] = useState({
     title: { eng: "", ar: "" },
     content: { eng: "", ar: "" },
+    liveLink: "",
+    src: "",
     category: "",
     imageUrl: "",
     publicId: "",
@@ -34,7 +32,7 @@ export default function useEditData() {
 
   useEffect(() => {
     const fetchData = async () => {
-        setLoadingComponent(true);
+      setLoadingComponent(true);
       const ref = doc(db, "data", id!);
       const snap = await getDoc(ref);
       if (snap.exists()) {
@@ -42,6 +40,8 @@ export default function useEditData() {
         setForm({
           title: data.title,
           content: data.content || { eng: "", ar: "" },
+          liveLink: data.liveLink,
+          src: data.src,
           category: data.category,
           imageUrl: data.imageUrl,
           publicId: data.publicId,
@@ -52,6 +52,7 @@ export default function useEditData() {
     fetchData();
   }, [id]);
 
+  // ⚠️ Keep dangerous function
   const deleteOldImageFromCloudinary = async (publicId: string) => {
     const cloudName = "dfe962gp1";
     const apiKey = "764583652425529";
@@ -82,54 +83,62 @@ export default function useEditData() {
     });
   };
 
-  const uploadToCloudinary = async (): Promise<{ url: string; public_id: string }> => {
-    if (!image) throw new Error("No image selected");
+  // ✅ safer unique publicId
+ const uploadToCloudinary = async (): Promise<{ url: string; public_id: string }> => {
+  if (!image) throw new Error("No image selected");
 
-    const formData = new FormData();
-    formData.append("file", image);
+  const formData = new FormData();
+  formData.append("file", image);
+  formData.append("upload_preset", "unsigned_upload");
 
-    const folderPath = `data/${form.category}`;
-    const publicId = form.title.eng.trim().replace(/\s+/g, "_");
+  const publicId = form.title.eng.trim().replace(/\s+/g, "_");
+  formData.append("public_id", publicId);
 
-    formData.append("upload_preset", "unsigned_upload");
-    formData.append("folder", folderPath);
-    formData.append("public_id", publicId);
+  const res = await fetch("https://api.cloudinary.com/v1_1/dfe962gp1/image/upload", {
+    method: "POST",
+    body: formData,
+  });
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dfe962gp1/image/upload", {
-      method: "POST",
-      body: formData,
-    });
+  const data = await res.json();
 
-    const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || "Upload failed");
 
-    if (!res.ok) throw new Error(data.error?.message || "Upload failed");
-
-    return {
-      url: data.secure_url,
-      public_id: data.public_id,
-    };
+  return {
+    url: data.secure_url,
+    public_id: data.public_id,
   };
-
- 
+};
 
   const handleUpdate = async () => {
-    if (!form.title.eng || !form.category) return alert("Please fill all required fields.");
+    if (
+      !form.title.eng ||
+      !form.title.ar ||
+      !form.content.eng ||
+      !form.content.ar ||
+      !form.category ||
+      !form.liveLink ||
+      !form.src
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
 
     setLoading(true);
     try {
       const updateData: any = {
         title: form.title,
         content: form.content,
+        liveLink: form.liveLink,
+        src: form.src,
         category: form.category,
         updatedAt: serverTimestamp(),
       };
 
+      // 🔄 Replace image if new one uploaded
       if (image) {
-        // delete old image from Cloudinary
         if (form.publicId) {
           await deleteOldImageFromCloudinary(form.publicId);
         }
-
         const uploadRes = await uploadToCloudinary();
         updateData.imageUrl = uploadRes.url;
         updateData.publicId = uploadRes.public_id;

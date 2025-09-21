@@ -18,6 +18,7 @@ export default function AddData() {
       ? `bg-black/90 text-white placeholder-gray-300 border-gray-600`
       : "bg-white text-black placeholder-gray-600 border-gray-300"
   } border p-2 rounded-md w-full`;
+console.log(loading);
 
   return (
     <div className={`${isDark ? "bg-white text-black" : "bg-black text-white"} shadow-md rounded-xl p-4 w-full max-w-3xl mx-auto mb-6 space-y-4 border dark:border-gray-700`}>
@@ -44,7 +45,7 @@ export default function AddData() {
             })
           }
           placeholder="Title (Arabic)"
-          className={inputClass}
+          className={`${inputClass} text-right`}
         />
                 <input
           type="text"
@@ -61,7 +62,7 @@ export default function AddData() {
         
         <input
           type="text"
-          value={form.title.ar}
+          value={form.src}
           onChange={(e) =>
             setForm({
               ...form,
@@ -92,7 +93,7 @@ export default function AddData() {
             })
           }
           placeholder="Content (Arabic)"
-          className={`${inputClass} col-span-2 h-24 resize-none`}
+          className={`${inputClass} col-span-2 h-24 resize-none dir-rtl`}
         />
 
         <select

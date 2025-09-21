@@ -19,44 +19,39 @@ export const useAdd = () => {
   const isDark = useSelector((state: RootState) => state.dark.value);
  const navigate=useNavigate()
   // Upload image to Cloudinary
-  const uploadToCloudinary = async (): Promise<{
-    url: string;
-    public_id: string;
-  }> => {
-    if (!form.image) throw new Error("No image selected");
+const uploadToCloudinary = async (): Promise<{ url: string; public_id: string }> => {
+  if (!form.image) throw new Error("No image selected");
 
-    const formData = new FormData();
-    formData.append("file", form.image);
+  const formData = new FormData();
+  formData.append("file", form.image);
 
-    // Sanitize and set folder + public_id
-    const folderPath = `data/${form.category}`;
-    const publicId = form.title.eng.trim().replace(/\s+/g, "_");
+  // Safer unique public_id
+  const folderPath = `data/${form.category}`;
+  const publicId = `${form.title.eng.trim().replace(/\s+/g, "_")}_${Date.now()}`;
 
-    formData.append("upload_preset", "unsigned_upload"); // Your Cloudinary preset
-    formData.append("folder", folderPath);
-    formData.append("public_id", publicId);
+  formData.append("upload_preset", "unsigned_upload");
+  formData.append("folder", folderPath);
+  formData.append("public_id", publicId);
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dfe962gp1/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+  const res = await fetch("https://api.cloudinary.com/v1_1/dfe962gp1/image/upload", {
+    method: "POST",
+    body: formData,
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+  if (!res.ok) throw new Error(data.error?.message || "Upload failed");
 
-    return {
-      url: data.secure_url,
-      public_id: data.public_id, // 👈 store this for delete
-    };
+  return {
+    url: data.secure_url,
+    public_id: data.public_id,
   };
+};
+
 
   // Add data to Firestore
   const addData = async () => {
-    if (!form.title.eng || !form.content.eng || !form.category || !form.image) {
+    if (!form.title.eng || !form.title.ar || !form.content.eng || !form.content.ar || !form.category || !form.image|| !form.liveLink ||!form.src ) {
       alert("Please fill all fields and select an image");
       return;
     }
@@ -69,6 +64,8 @@ export const useAdd = () => {
         title: form.title,
         content: form.content,
         category: form.category,
+        liveLink: form.liveLink,
+        src:form.src,
         imageUrl: uploadResult.url,
         publicId: uploadResult.public_id, // 👈 Save this!
         createdAt: serverTimestamp(),

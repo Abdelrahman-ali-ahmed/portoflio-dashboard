@@ -30,10 +30,6 @@ export default function Cvs() {
     isDark ? "text-white" : "text-blue-500"
   }`;
   const headerClass = `${isDark ? "text-white" : "text-black"}`;
-  const tableBorderClass = `${isDark ? "border-gray-700" : "border-gray-300"}`;
-  const hoverRow = isDark
-    ? "hover:bg-white hover:text-black"
-    : "hover:bg-black hover:text-white";
 
   const buttonClass = `px-4 py-2 rounded transition ${
     editId
@@ -88,10 +84,6 @@ export default function Cvs() {
       <h2 className={`text-xl font-semibold mb-2 ${headerClass}`}>All Cvs</h2>
       <Table
   data={links}
-  borderClass={tableBorderClass}
-  hoverRowClass={hoverRow}
-  headerClass={isDark ? "text-white" : "text-black"}
-  rowTextClass={isDark ? "text-white" : "text-black"}
   columns={[
     { header: "Name", accessor: "name" },
     { header: "URL", accessor: "url", hiddenOnMobile: true },

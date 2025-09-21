@@ -1,5 +1,7 @@
 // src/components/Table.tsx
 import React from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 
 type TableColumn<T> = {
   header: string;
@@ -12,30 +14,35 @@ type TableProps<T> = {
   data: T[];
   columns: TableColumn<T>[];
   emptyMessage?: string;
-  hoverRowClass?: string;
-  borderClass?: string;
-  headerClass?: string;
-  rowTextClass?: string;
 };
 
 export function Table<T extends { id?: string | number }>({
   data,
   columns,
   emptyMessage = "No data available",
-  hoverRowClass = "",
-  borderClass = "",
-  headerClass = "",
-  rowTextClass = "",
 }: TableProps<T>) {
+  const isDark = useSelector((state: RootState) => state.dark.value);
+
+  // ✅ Unified styling
+  const borderClass = isDark ? "border-gray-700" : "border-gray-300";
+  const headerClass = isDark ? "bg-gray-800 text-white" : "bg-gray-200 text-black";
+  const rowTextClass = isDark ? "text-white" : "text-black";
+
+  // ✅ Hover effect (always bold, smooth transition)
+  const hoverRowClass = isDark
+    ? "hover:bg-white hover:text-black"
+    : "hover:bg-black hover:text-white";
+
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-lg shadow-sm">
       <table className={`w-full border-collapse border ${borderClass}`}>
+        {/* Table Header */}
         <thead className={headerClass}>
           <tr>
             {columns.map((col, idx) => (
               <th
                 key={idx}
-                className={`p-2 border ${borderClass} text-left font-semibold ${
+                className={`p-3 border ${borderClass} text-left font-semibold ${
                   col.hiddenOnMobile ? "hidden sm:table-cell" : ""
                 } ${col.className || ""}`}
               >
@@ -44,12 +51,14 @@ export function Table<T extends { id?: string | number }>({
             ))}
           </tr>
         </thead>
+
+        {/* Table Body */}
         <tbody className={rowTextClass}>
           {data.length === 0 ? (
             <tr>
               <td
                 colSpan={columns.length}
-                className="text-center p-4 text-gray-400 italic"
+                className="text-center p-6 text-gray-400 italic"
               >
                 {emptyMessage}
               </td>
@@ -58,12 +67,12 @@ export function Table<T extends { id?: string | number }>({
             data.map((row) => (
               <tr
                 key={row.id ?? Math.random()}
-                className={hoverRowClass}
+                className={`font-bold transition-all duration-500 ${hoverRowClass}`}
               >
                 {columns.map((col, idx) => (
                   <td
                     key={idx}
-                    className={`p-2 border ${borderClass} ${
+                    className={`p-3 border ${borderClass} transition-all duration-500 ${
                       col.hiddenOnMobile ? "hidden sm:table-cell" : ""
                     } ${col.className || ""}`}
                   >
