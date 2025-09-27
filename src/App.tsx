@@ -5,12 +5,14 @@ import About from './page/About'
 import Contact from './page/Contact'
 import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
-import Location from './page/Location'
+import Experience from './page/Experience'
 import Customer from './page/Customer'
 import Data from './page/Data'
 import AddData from './page/Data/page/Add/AddData'
 import EditData from './page/Data/page/Edit/EditData'
 import Cvs from './page/Cvs'
+import AddExperience from './page/Experience/pages/add'
+import EditExperience from './page/Experience/pages/edit'
 
 
 function App() {
@@ -28,10 +30,26 @@ function App() {
           }
         />
         <Route
-          path="location"
+          path="experience"
           element={
             <ProtectedRoute>
-              <Location   />
+              <Experience   />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="experience/add"
+          element={
+            <ProtectedRoute>
+              <AddExperience   />
+            </ProtectedRoute>
+          }
+        />
+                <Route
+          path="experience/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditExperience   />
             </ProtectedRoute>
           }
         />

@@ -41,7 +41,7 @@ const Menus = [
   { title: "Cvs", icon: <CiFolderOn />, onclick: () => navigate("/cvs") },
   { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
   { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
-  { title: "Location", icon: <FaLocationDot />, onclick: () => navigate("/location") },
+  { title: "Experience", icon: <FaLocationDot />, onclick: () => navigate("/experience") },
   { title: "customer", icon: <FaHandshake />, onclick: () => navigate("/customer") },
   {
     title: dark ? "Lightmode" : "Darkmode",

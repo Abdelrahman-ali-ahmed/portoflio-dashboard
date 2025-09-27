@@ -1,10 +1,7 @@
 // src/types/index.ts
-export interface LocationType {
-  id: string;
-  name: string;
-  address: string;
-  mapLink: string;
-}
+export interface ExperienceType 
+{  id: string,name: string, field: string, place: string,startDate:string,endDate:string,isPresent:boolean }
+
 
 export interface ContactFormType {
   whatsapp: string;
