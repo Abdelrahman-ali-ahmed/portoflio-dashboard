@@ -4,7 +4,7 @@ export const uploadToCloudinary = async (file: File, imageName?: string) => {
   formData.append("file", file);
    formData.append("upload_preset", "unsigned_upload");
   if (imageName) {
-    formData.append("public_id", `data/customer/${imageName}`); 
+    formData.append("public_id", `data/Technology/${imageName}`); 
   }
 
   const res = await fetch("https://api.cloudinary.com/v1_1/dfe962gp1/image/upload", {

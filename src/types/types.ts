@@ -11,9 +11,9 @@ export interface ContactFormType {
   facebook: string;
   instagram: string;
 }
-export type CustomerType = {
+export type TechnologyType = {
   id: string;
-  name: {eng:string,ar:string};
+  name: string;
   logo: string;
   createdAt?: Date;
 };

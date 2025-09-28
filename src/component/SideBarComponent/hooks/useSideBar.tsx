@@ -1,4 +1,4 @@
-import { FaDatabase, FaHandshake, FaLocationDot } from 'react-icons/fa6';
+import { FaDatabase, FaPuzzlePiece } from 'react-icons/fa6';
 import {  IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineDarkMode } from 'react-icons/md';
@@ -13,6 +13,7 @@ import { changeDark } from '../../../redux/slices/darkSlice';
 import { changeLogin } from '../../../redux/slices/loginSlice';
 import { changeRole } from '../../../redux/slices/roleSlice';
 import { changeOpen } from '../../../redux/slices/openSlice';
+import { GrTechnology } from 'react-icons/gr';
 
 export default function useSideBar() {
   const dispatch = useDispatch();
@@ -41,8 +42,8 @@ const Menus = [
   { title: "Cvs", icon: <CiFolderOn />, onclick: () => navigate("/cvs") },
   { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
   { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
-  { title: "Experience", icon: <FaLocationDot />, onclick: () => navigate("/experience") },
-  { title: "customer", icon: <FaHandshake />, onclick: () => navigate("/customer") },
+  { title: "Experience", icon: <FaPuzzlePiece />, onclick: () => navigate("/experience") },
+  { title: "Technology", icon: <GrTechnology />, onclick: () => navigate("/technology") },
   {
     title: dark ? "Lightmode" : "Darkmode",
     icon: <MdOutlineDarkMode />,

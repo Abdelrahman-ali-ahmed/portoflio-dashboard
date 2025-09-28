@@ -6,7 +6,7 @@ import Contact from './page/Contact'
 import Login from './page/Login'
 import ProtectedRoute from './component/ProtectedRoute'
 import Experience from './page/Experience'
-import Customer from './page/Customer'
+import Technology from './page/Technology'
 import Data from './page/Data'
 import AddData from './page/Data/page/Add/AddData'
 import EditData from './page/Data/page/Edit/EditData'
@@ -70,10 +70,10 @@ function App() {
           }
         />
           <Route
-          path="customer"
+          path="Technology"
           element={
             <ProtectedRoute>
-              <Customer />
+              <Technology />
             </ProtectedRoute>
           }
         />
