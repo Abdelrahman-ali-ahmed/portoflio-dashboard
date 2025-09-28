@@ -2,6 +2,9 @@
 export interface ExperienceType 
 {  id: string,name: string, field: string, place: string,startDate:string,endDate:string,isPresent:boolean }
 
+export type MessageForm = {
+  link: string;
+};
 
 export interface ContactFormType {
   whatsapp: string;

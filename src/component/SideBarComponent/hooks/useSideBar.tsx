@@ -1,4 +1,4 @@
-import { FaDatabase, FaPuzzlePiece } from 'react-icons/fa6';
+import { FaDatabase, FaMessage, FaPuzzlePiece } from 'react-icons/fa6';
 import {  IoShareSocialSharp } from 'react-icons/io5';
 import { LuLogOut } from 'react-icons/lu';
 import { MdOutlineDarkMode } from 'react-icons/md';
@@ -43,6 +43,7 @@ const Menus = [
   { title: "Data", icon: <FaDatabase /> ,onclick: () => navigate("/data") },
   { title: "Contact", icon: <IoShareSocialSharp />, onclick: () => navigate("/contact") },
   { title: "Experience", icon: <FaPuzzlePiece />, onclick: () => navigate("/experience") },
+    { title: "Message", icon: <FaMessage  />, onclick: () => navigate("/message") },
   { title: "Technology", icon: <GrTechnology />, onclick: () => navigate("/technology") },
   {
     title: dark ? "Lightmode" : "Darkmode",

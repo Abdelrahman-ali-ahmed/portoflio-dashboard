@@ -13,6 +13,7 @@ import EditData from './page/Data/page/Edit/EditData'
 import Cvs from './page/Cvs'
 import AddExperience from './page/Experience/pages/add'
 import EditExperience from './page/Experience/pages/edit'
+import MessageLink from './page/messageLink'
 
 
 function App() {
@@ -58,6 +59,14 @@ function App() {
           element={
             <ProtectedRoute>
               <About />
+            </ProtectedRoute>
+          }
+        />
+                <Route
+          path="message"
+          element={
+            <ProtectedRoute>
+              <MessageLink />
             </ProtectedRoute>
           }
         />
