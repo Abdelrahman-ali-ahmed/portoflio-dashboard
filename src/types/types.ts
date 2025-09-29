@@ -11,8 +11,7 @@ export interface ContactFormType {
   linkedin: string;
   email: string;
   phone: string;
-  facebook: string;
-  instagram: string;
+ gitHub:string;
 }
 export type TechnologyType = {
   id: string;

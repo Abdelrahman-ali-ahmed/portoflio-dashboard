@@ -1,5 +1,5 @@
 import Loading from "../../component/loading";
-import useMessage from "./hooks/usemessage";
+import useMessage from "./hooks/useMessage";
 
 
 export default function MessageLink() {

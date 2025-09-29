@@ -11,8 +11,7 @@ export default function useContact() {
     linkedin: "",
     email: "",
     phone: "",
-    facebook: "",
-    instagram: "",
+    gitHub:"",
   });
 
   const [loading, setLoading] = useState(true);

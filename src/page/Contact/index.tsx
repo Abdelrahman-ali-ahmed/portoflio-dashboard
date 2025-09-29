@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa6";
 import useContact from "./hooks/useContact";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -12,8 +12,7 @@ export default function Contact() {
     { title: "linkedin", icon: <FaLinkedin /> },
     { title: "email", icon: <MdEmail /> },
     { title: "phone", icon: <FaPhoneAlt /> },
-    { title: "facebook", icon: <FaFacebook /> },
-    { title: "instagram", icon: <FaInstagram /> },
+    { title: "Git Hub", icon: <FaGithub   /> },
   ];
 
   const containerClass = `p-6 min-h-screen duration-300 ${

@@ -6,8 +6,7 @@ export async function updateContactData(data: {
   linkedin: string;
   email: string;
   phone: string;
-  facebook: string;
-  instagram: string;
+gitHub:string;
 }) {
   const ref = doc(db, "content", "contact");
   await setDoc(ref, data, { merge: true });
