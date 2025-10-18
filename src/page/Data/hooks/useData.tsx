@@ -12,9 +12,10 @@ import { db } from "../../../firebase/firebase";
 import { generateSHA1 } from "../../../component/generateSHA1/generateSHA1";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
+import type { Project } from "../../../types/types";
 
 export const useData = () => {
-  const [dataItems, setDataItems] = useState<any[]>([]);
+  const [dataItems, setDataItems] = useState< Project[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingComponent, setLoadingComponent] = useState(false);
   const isDark=useSelector((state: RootState) => state.dark.value);
@@ -22,10 +23,12 @@ export const useData = () => {
     setLoadingComponent(true);
     const q = query(collection(db, "data"), orderBy("createdAt", "desc"));
     const unsub = onSnapshot(q, (snapshot) => {
-      const result = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+const result = snapshot.docs.map((doc) => ({
+  ...(doc.data() as Project),
+  id: doc.id, 
+}));
+      console.log("result",result);
+      
       setDataItems(result);
       setLoadingComponent(false);
     });
@@ -42,11 +45,9 @@ const deleteData = async (id: string, publicId?: string) => {
       const timestamp = Math.floor(Date.now() / 1000);
       const apiKey = "764583652425529";
       const apiSecret = "ruw8RfhA6XdpPKgb3-NiW5hYLvU";
-
       const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
       const signature = await generateSHA1(stringToSign);
-console.log(publicId);
-
+     console.log(publicId);
       const formData = new FormData();
       formData.append("public_id", publicId);
       formData.append("api_key", apiKey);

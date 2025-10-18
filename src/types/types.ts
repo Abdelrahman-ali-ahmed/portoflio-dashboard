@@ -19,3 +19,24 @@ export type TechnologyType = {
   logo: string;
   createdAt?: Date;
 };
+// types.ts
+
+
+type LocaleMap = {
+  ar: string;
+  eng: string;
+};
+export type Project = {
+  id: string; 
+  category: 'Html + js + Css' | string;
+  content: LocaleMap;
+  title: LocaleMap;
+  createdAt: string; 
+  updatedAt?: string; 
+  imageUrl?: string;
+  liveLink?: string;
+  src?: string;     
+  publicId?: string;
+
+};
+

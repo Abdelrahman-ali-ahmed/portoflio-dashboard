@@ -23,6 +23,7 @@ export function Table<T extends { id?: string | number }>({
 }: TableProps<T>) {
   const isDark = useSelector((state: RootState) => state.dark.value);
 
+
   // ✅ Unified styling
   const borderClass = isDark ? "border-gray-700" : "border-gray-300";
   const headerClass = isDark ? "bg-gray-800 text-white" : "bg-gray-200 text-black";

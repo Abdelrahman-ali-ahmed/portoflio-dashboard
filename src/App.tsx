@@ -14,115 +14,42 @@ import Cvs from './page/Cvs'
 import AddExperience from './page/Experience/pages/add'
 import EditExperience from './page/Experience/pages/edit'
 import MessageLink from './page/messageLink'
+import ChartDaigrams from './page/Chart'
 
 
 function App() {
+ const pages= [
+  { title: "Home", path: "/home"  ,component:<Home/>},
+  { title: "About", path: "/about",component:<About/> },
+  { title: "Contact", path: "/contact", component:<Contact/> },
+  { title: "Experience", path: "/experience", component:<Experience/> },
+  { title: "Technology", path: "/technology", component:<Technology/> },
+  { title: "Add Data", path: "/data/add", component:<AddData/> },
+  { title: "Edit Data", path: "/data/edit/:id", component:<EditData/> },
+  { title: "Add Experience", path: "/experience/add", component:<AddExperience/> },
+  { title: "Edit Experience", path: "/experience/edit/:id", component:<EditExperience/> },
+  { title: "Data", path: "/data", component:<Data/> },
+  { title: "Cvs", path: "/cvs" ,component:<Cvs/> },
+  { title: "Message", path: "/message",component:<MessageLink/> },
+  { title: "Chart", path: "/chart",component:<ChartDaigrams/> },
+]
   return (
     
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Login />} />
-        <Route
-          path="home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="experience"
-          element={
-            <ProtectedRoute>
-              <Experience   />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="experience/add"
-          element={
-            <ProtectedRoute>
-              <AddExperience   />
-            </ProtectedRoute>
-          }
-        />
-                <Route
-          path="experience/edit/:id"
-          element={
-            <ProtectedRoute>
-              <EditExperience   />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="about"
-          element={
-            <ProtectedRoute>
-              <About />
-            </ProtectedRoute>
-          }
-        />
-                <Route
-          path="message"
-          element={
-            <ProtectedRoute>
-              <MessageLink />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="contact"
-          element={
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
-          }
-        />
+        {pages.map((page) => (
           <Route
-          path="Technology"
-          element={
-            <ProtectedRoute>
-              <Technology />
-            </ProtectedRoute>
-          }
-        />
-           <Route
-          path="cvs"
-          element={
-            <ProtectedRoute>
-              <Cvs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="data"
-          element={
-            <ProtectedRoute>
-              <Data/>
-            </ProtectedRoute>
-          }
-        />
-
-         <Route
-          path="data/add"
-          element={
-            <ProtectedRoute>
-              <AddData/>
-            </ProtectedRoute>
-          }
-        />
-    <Route
-  path="data/edit/:id"
-  element={
-    <ProtectedRoute>
-      <EditData />
-    </ProtectedRoute>
-  }
-/>
-
-
+            key={page.title}
+            path={page.path}
+            element={
+              <ProtectedRoute>
+                {page.component}
+              </ProtectedRoute>
+            }
+          />
+        ))}
       </Route>
-      
     </Routes>
   );
 }
