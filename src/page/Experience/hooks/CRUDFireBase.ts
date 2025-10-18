@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { collection, addDoc,  doc, updateDoc, deleteDoc, getDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import type { ExperienceType } from "../../../types/types";
 
@@ -6,13 +6,24 @@ import type { ExperienceType } from "../../../types/types";
 export const addLocation = async (location: Omit<ExperienceType, "id">): Promise<void> => {
   await addDoc(collection(db, "Experiences"), location);
 };
-export const getExperiences = async (): Promise<ExperienceType[]> => {
-  const querySnapshot = await getDocs(collection(db, "Experiences"));
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...(doc.data() as Omit<ExperienceType, "id">),
-  }));
+export const getExperiences = (
+  sort: "asc" | "desc",
+  setExperiences: (data: ExperienceType[]) => void
+) => {
+  const q = query(collection(db, "Experiences"), orderBy("createdAt", sort));
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const result = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Omit<ExperienceType, "id">),
+    }));
+
+    setExperiences(result);
+  });
+
+  return unsub;
 };
+
 
 export const updateLocation = async (
   id: string,

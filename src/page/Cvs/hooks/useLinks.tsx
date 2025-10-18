@@ -14,35 +14,46 @@ import {
 import { db } from "../../../firebase/firebase"; // Adjust path
 import type { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
+import type { LinkType } from "../../../types/types";
 
 export const useCvs = () => {
-  const [links, setLinks] = useState<any[]>([]);
+  const [links, setLinks] = useState<LinkType[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingComponenet, setLoadingComponenet] = useState(false);
   const [form, setForm] = useState({ name: "", url: "" });
+  const [filter, setFilter] = useState("All");
+ const [sort, setSort] = useState<"asc" | "desc">("asc");
   const [editId, setEditId] = useState<string | null>(null);
  const getLinks = () => {
   setLoadingComponenet(true);
-  const q = query(collection(db, "links"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "links"), orderBy("createdAt", sort));
 
   const unsub = onSnapshot(q, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setLinks(data);
-    setLoadingComponenet(false); // ✅
+    const data: LinkType[] = snapshot.docs.map((doc) => ({
+  id: doc.id,
+  ...(doc.data() as Omit<LinkType, "id">),
+}));
+    let filteredData = data;
+    if (filter === "Active") {
+      filteredData = data.filter((link) => link?.value === true);
+    } else if (filter === "Inactive") {
+      filteredData = data.filter((link) => link?.value === false);
+    }
+
+    setLinks(filteredData);
+    setLoadingComponenet(false);
   });
 
   return unsub;
 };
 
 
+
   useEffect(() => {
     
     const unsub = getLinks();
     return () => unsub();
-  }, []);
+  }, [filter,sort]);
 
   const addLink = async () => {
     if (!form.name.trim() || !form.url.trim()) return alert("Fill all fields");
@@ -127,8 +138,14 @@ return {
   formatDate,
   startEdit,
   loadingComponenet,
-  editId,
-  isDark,
+  setLoadingComponenet,
   setEditId,
+  getLinks,
+  filter,
+  setFilter,
+  editId,
+  sort,
+  setSort,
+  isDark,
 };
 };

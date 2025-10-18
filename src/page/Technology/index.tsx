@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../component/loading";
 import { Table } from "../../component/Table";
 import { useTechnology } from "./hooks/useTechnology";
+import SelectInput from "../../component/SelectInput";
 
 export default function Technology() {
   const {
@@ -14,6 +15,8 @@ export default function Technology() {
     Technologies,
     loading,
     editingId,
+    sort,
+    setSort,
     isDark,
   } = useTechnology();
 
@@ -74,8 +77,10 @@ export default function Technology() {
           {editingId ? "Update" : loading ? "Saving..." : "Add"}
         </button>
       </div>
+<div className="w-full flex justify-between my-3" >       <h2 className={`text-xl font-semibold mb-2 ${headerClass}`}>All Technologies</h2>
+<SelectInput options={["asc", "desc"]} value={sort} onChange={(value) => setSort(value as "asc" | "desc")} 
+  /> </div>
 
-      <h2 className={`text-xl font-semibold mb-2 ${headerClass}`}>All Technologies</h2>
       <Table
           data={Technologies}
          

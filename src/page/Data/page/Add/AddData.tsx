@@ -7,7 +7,6 @@ const fixedCategories = [
   "React",
   "React + vite",
   "Next",
-
 ];
 
 export default function AddData() {

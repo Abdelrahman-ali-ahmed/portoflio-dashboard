@@ -15,66 +15,95 @@ import type { RootState } from "../../../redux/store";
 import type { Project } from "../../../types/types";
 
 export const useData = () => {
-  const [dataItems, setDataItems] = useState< Project[]>([]);
+  const [dataItems, setDataItems] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState("All");
+  const [sort, setSort] = useState<"asc" | "desc">("asc");
   const [loadingComponent, setLoadingComponent] = useState(false);
-  const isDark=useSelector((state: RootState) => state.dark.value);
+  const isDark = useSelector((state: RootState) => state.dark.value);
+
+  const fixedCategories = [
+    "All",
+    "Html + Css",
+    "Html + js + Css",
+    "React",
+    "React + vite",
+    "Next",
+  ];
+
+  // Fetch data and apply sort
   useEffect(() => {
     setLoadingComponent(true);
-    const q = query(collection(db, "data"), orderBy("createdAt", "desc"));
+
+    const q = query(collection(db, "data"), orderBy("createdAt", sort));
     const unsub = onSnapshot(q, (snapshot) => {
-const result = snapshot.docs.map((doc) => ({
-  ...(doc.data() as Project),
-  id: doc.id, 
-}));
-      console.log("result",result);
-      
+      const result = snapshot.docs.map((doc) => ({
+        ...(doc.data() as Project),
+        id: doc.id,
+      }));
+
       setDataItems(result);
       setLoadingComponent(false);
     });
 
     return () => unsub();
-  }, []);
+  }, [sort]);
 
-const deleteData = async (id: string, publicId?: string) => {
-  if (!window.confirm("Are you sure?")) return;
-  setLoading(true);
-  try {
-    if (publicId) {
-      const cloudName = "dfe962gp1";
-      const timestamp = Math.floor(Date.now() / 1000);
-      const apiKey = "764583652425529";
-      const apiSecret = "ruw8RfhA6XdpPKgb3-NiW5hYLvU";
-      const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-      const signature = await generateSHA1(stringToSign);
-     console.log(publicId);
-      const formData = new FormData();
-      formData.append("public_id", publicId);
-      formData.append("api_key", apiKey);
-      formData.append("timestamp", timestamp.toString());
-      formData.append("signature", signature);
+  // Delete document from Cloudinary + Firestore
+  const deleteData = async (id: string, publicId?: string) => {
+    if (!window.confirm("Are you sure?")) return;
+    setLoading(true);
+    try {
+      if (publicId) {
+        const cloudName = "dfe962gp1";
+        const timestamp = Math.floor(Date.now() / 1000);
+        const apiKey = "764583652425529";
+        const apiSecret = "ruw8RfhA6XdpPKgb3-NiW5hYLvU";
+        const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+        const signature = await generateSHA1(stringToSign);
 
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
-        method: "POST",
-        body: formData,
-      });
+        const formData = new FormData();
+        formData.append("public_id", publicId);
+        formData.append("api_key", apiKey);
+        formData.append("timestamp", timestamp.toString());
+        formData.append("signature", signature);
 
-      const result = await res.json();
-      console.log("Cloudinary delete response:", result);
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const result = await res.json();
+        console.log("Cloudinary delete response:", result);
+      }
+
+      await deleteDoc(doc(db, "data", id));
+    } catch (err) {
+      console.error("Delete failed:", err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // 2. Delete from Firestore
-    await deleteDoc(doc(db, "data", id));
-  } catch (err) {
-    console.error("Delete failed:", err);
-  } finally {
-    setLoading(false);
-  }
-};
+  // 🔍 Derived data — apply filter to dataItems
+  const filteredItems =
+    filter === "All"
+      ? dataItems
+      : dataItems.filter((item) => item.category === filter);
 
-
-
-
-
-  return { dataItems, deleteData, loading,isDark,loadingComponent };
+  return {
+    dataItems: filteredItems, // return filtered data
+    deleteData,
+    loading,
+    isDark,
+    fixedCategories,
+    loadingComponent,
+    filter,
+    setFilter,
+    sort,
+    setSort,
+  };
 };

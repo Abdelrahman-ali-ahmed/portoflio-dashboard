@@ -22,10 +22,10 @@ const SideBar = () => {
 
       {/* Logo + Title */}
       <div className="flex gap-x-4 items-center">
-        <img
-          src="/assets/logo.png"
-          className={`cursor-pointer duration-500 ${open ? "rotate-[360deg]" : ""}`}
-        />
+       <img
+  src={`/assets/${dark ? "black.png" : "white.png"}`}
+  className={`cursor-pointer duration-500 ${open ? "rotate-[360deg]" : ""} w-15 `}
+/>
         <h1
           className={`origin-left font-medium text-xl duration-200 ${
             !open ? "scale-0" : ""

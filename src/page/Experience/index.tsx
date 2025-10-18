@@ -1,29 +1,24 @@
 import { Link } from "react-router-dom";
 import Loading from "../../component/loading";
 import { Table } from "../../component/Table";
+import SelectInput from "../../component/SelectInput";
 import useExperience from "./hooks/useExperiences";
 
 export default function Experience() {
-   const {
+  const {
     experiences,
     loadingComponenet,
     handleDelete,
     navigate,
-    editId,
+    filter,
+    setFilter,
+    sort,
+    setSort,
     isDark,
-  } = useExperience ();
+  } = useExperience();
 
-  const containerClass = `p-4 min-h-screen duration-300 bg-transparent ${
-    isDark ? "text-white" : "text-blue-500"
-  }`;
-  const headerClass = `${isDark ? "text-white" : "text-black"}`;
-
-  const buttonClass = `px-4 py-2 rounded transition font-bold  w-[30%] md:w-[15%] ${
-    editId
-      ? "bg-yellow-500 hover:bg-yellow-700 text-white"
-      : isDark
-      ? "bg-white text-black hover:bg-transparent hover:text-white hover:border"
-      : "bg-black text-white hover:bg-transparent hover:text-black hover:border"
+  const containerClass = `min-h-screen p-6 bg-transparent duration-300 ${
+    isDark ? "text-white" : "text-gray-900"
   }`;
 
   if (loadingComponenet) {
@@ -34,72 +29,109 @@ export default function Experience() {
     );
   }
 
-  console.log(experiences);
-  
-
   return (
     <div className={containerClass}>
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-              <h1 className={`text-2xl font-bold mb-4 ${headerClass } `}>Add New Experience</h1>
-
-      <button
-        onClick={() => navigate("add")}
-        className={buttonClass}
-      >
-        Add
-      </button> </div>
-
-
-      <h2 className={`text-xl font-semibold mb-2 ${headerClass}`}>All Experience</h2>
-
-      <div className="overflow-x-auto">
-    <Table
-  data={experiences}
-  columns={[
-    { header: "Name", accessor: "name" },
-    { header: "Field", accessor: "field" }, // ✅ fixed typo
-    { header: "Place", accessor: "place" },
-        { header: "Start Date", accessor: "startDate" },
-        { header: "End Date", accessor: "endDate" },
-    {
-      header: "Status",
-      accessor: (row) => (
-        <span
-          className={`px-2 py-1 rounded text-xs font-semibold ${
-            row?.isPresent ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+      {/* Header section with Add button */}
+      <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h1
+          className={`text-2xl font-bold ${
+            isDark ? "text-white" : "text-gray-900"
           }`}
         >
-          {row.isPresent ? "Active" : "Inactive"}
-        </span>
-      ),
-    },
-    {
-      header: "Actions",
-      accessor: (row) => (
-        <div className="grid grid-cols-2  gap-2 w-32">
-    <Link
+          Experiences Management
+        </h1>
+
+        <button
+          onClick={() => navigate("add")}
+          className={`${
+            isDark
+              ? "bg-white text-black hover:bg-transparent hover:text-white"
+              : "bg-black text-white hover:bg-transparent hover:text-black"
+          } border px-4 py-2 rounded-md transition-colors duration-200 shadow-sm`}
+        >
+          + Add New
+        </button>
+      </div>
+
+      {/* Filter + Sort Section */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <SelectInput
+            options={["All", "Present", "Not Present"]}
+            value={filter}
+            onChange={(value) =>
+              setFilter(value as "All" | "Present" | "Not Present")
+            }
+          />
+          <SelectInput
+            options={["asc", "desc"]}
+            value={sort}
+            onChange={(value) => setSort(value as "asc" | "desc")}
+          />
+        </div>
+      </div>
+
+      {/* Experience Table */}
+      {experiences.length === 0 ? (
+        <div
+          className={`rounded-lg p-6 text-center text-lg font-medium ${
+            isDark
+              ? "bg-gray-900 border border-gray-700 text-gray-300"
+              : "bg-white border border-gray-300 text-gray-500"
+          }`}
+        >
+          No experiences found.
+        </div>
+      ) : (
+        <Table
+          data={experiences}
+          columns={[
+            { header: "Name", accessor: "name" },
+            { header: "Field", accessor: "field" },
+            { header: "Place", accessor: "place" },
+            { header: "Start Date", accessor: "startDate" },
+            { header: "End Date", accessor: "endDate" },
+            {
+              header: "Status",
+              accessor: (row) => (
+                <span
+                  className={`px-2 py-1 rounded text-xs font-semibold ${
+                    row?.isPresent
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-400 text-white"
+                  }`}
+                >
+                  {row.isPresent ? "Active" : "Inactive"}
+                </span>
+              ),
+            },
+            {
+              header: "Actions",
+              accessor: (row) => (
+                <div className="flex flex-wrap gap-2">
+                  <Link
                     to={`/experience/edit/${row.id}`}
-                    className="flex justify-center px-2 py-1 text-xs rounded bg-yellow-500 hover:bg-yellow-600 text-white"
+                    className="px-2 py-1 text-xs rounded bg-yellow-500 hover:bg-yellow-600 text-white"
                   >
                     Edit
                   </Link>
-          <button
-            onClick={() => handleDelete(row.id!)} // ✅ delete
-            disabled={loadingComponenet}
-            className={`px-2 py-1 rounded text-xs ${
-              loadingComponenet
-                ? "bg-red-300 text-white cursor-not-allowed"
-                : "bg-red-500 hover:bg-red-600 text-white"
-            }`}
-          >
-            Delete
-          </button>
-        </div>
-      ),
-    },
-  ]}
-/>
-      </div>
+                  <button
+                    onClick={() => handleDelete(row.id!)}
+                    disabled={loadingComponenet}
+                    className={`px-2 py-1 text-xs rounded ${
+                      loadingComponenet
+                        ? "bg-red-300 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600"
+                    } text-white`}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ),
+            },
+          ]}
+        />
+      )}
     </div>
   );
 }

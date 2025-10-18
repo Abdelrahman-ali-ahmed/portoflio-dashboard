@@ -1,6 +1,7 @@
 import Loading from "../../component/loading";
 import { useCvs } from "./hooks/useLinks";
 import { Table } from "../../component/Table";
+import SelectInput from "../../component/SelectInput";
 
 export default function Cvs() {
   const {
@@ -18,6 +19,10 @@ export default function Cvs() {
     editId,
     loading,
     isDark,
+    filter,
+    setFilter,
+    sort,
+    setSort,
   } = useCvs();
 
   const inputClass = `flex-1 p-2 border rounded focus:outline-none focus:ring transition ${
@@ -46,10 +51,13 @@ export default function Cvs() {
       </div>
     );
   }
+  console.log("links:",links);
+  
 
   return (
     <div className={containerClass}>
       <h2 className={`text-2xl font-bold mb-4 ${headerClass}`}>Cvs Manager</h2>
+
 
       {/* Form */}
       <div className="flex flex-wrap gap-4 mb-6">
@@ -81,7 +89,27 @@ export default function Cvs() {
       </div>
 
       {/* Table */}
-      <h2 className={`text-xl font-semibold mb-2 ${headerClass}`}>All Cvs</h2>
+<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 my-4">
+  {/* Title */}
+  <h2 className={`text-2xl font-semibold ${headerClass}`}>
+    All CVs
+  </h2>
+
+  {/* Filter + Sort Section */}
+  <div className="flex items-center gap-3 w-full sm:w-auto">
+    <SelectInput
+      options={["All", "Active", "Inactive"]}
+      value={filter}
+      onChange={(value) => setFilter(value as "All"| "Active"| "Inactive")}
+    />
+    <SelectInput
+      options={["asc", "desc"]}
+      value={sort}
+      onChange={(value) => setSort(value as "asc" | "desc")}
+    />
+  </div>
+</div>
+
       <Table
   data={links}
   columns={[
@@ -152,6 +180,7 @@ export default function Cvs() {
   ),
 },
   ]}
+  fileName="Cvs"
 />
     </div>
   );

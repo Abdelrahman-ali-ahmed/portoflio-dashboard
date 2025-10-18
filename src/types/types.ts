@@ -7,6 +7,13 @@ export interface ExperienceType
 export type MessageForm = {
   link: string;
 };
+export interface LinkType {
+  id: string;
+  name: string;
+  url: string;
+  value: boolean;
+  createdAt: any; // you can refine this later to Timestamp | FieldValue
+}
 
 export interface ContactFormType {
   whatsapp: string;

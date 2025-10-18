@@ -24,6 +24,7 @@ export const useTechnology = () => {
   });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [sort, setSort] = useState<"asc" | "desc">("asc");
   const [Technologies, setTechnologies] = useState<TechnologyType[]>([]);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
@@ -32,7 +33,7 @@ const cloudName = "dfe962gp1";
 const apiKey = "764583652425529";
 const apiSecret = "ruw8RfhA6XdpPKgb3-NiW5hYLvU";
   useEffect(() => {
-    const q = query(collection(db, "Technologies"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "Technologies"), orderBy("createdAt", sort) );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data: TechnologyType[] = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -213,6 +214,7 @@ const apiSecret = "ruw8RfhA6XdpPKgb3-NiW5hYLvU";
     page,
     setPage,
     itemsPerPage,
+    sort,setSort,
     loading,
     isDark,
     editingId,
