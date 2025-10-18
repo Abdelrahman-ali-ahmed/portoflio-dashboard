@@ -4,11 +4,12 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
 import type { ExperienceType } from "../../../types/types";
 import { useNavigate } from "react-router-dom";
+import { serverTimestamp } from "firebase/firestore";
 
 
 export default function useExperience() {
 const [experiences, setExperiences] = useState<ExperienceType[]>([]);
-const [form, setForm] = useState<Omit<ExperienceType, "id">>({
+const [form, setForm] = useState({
   name: "",
   field: "",
   place: "",
@@ -46,10 +47,10 @@ const [editId, setEditId] = useState<string | null>(null); // ✅
     setLoadingComponenet(true);
     try {
       if (editId) {
-      await updateLocation(editId, form);
+      await updateLocation(editId, {...form,createdAt:serverTimestamp()});
       setEditId(null); // Reset after editing
     } else {
-      await addLocation(form);
+      await addLocation({ ...form,createdAt:serverTimestamp() });
     } 
     } catch (erro) {
       setError(erro)

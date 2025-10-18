@@ -47,6 +47,8 @@ export default function Technology() {
       );
     }
 
+    console.log(Technologies);
+    
   return (
     <div className={containerClass}>
       <h1 className={`text-2xl font-bold mb-4 ${headerClass}`}>Technologies Management</h1>

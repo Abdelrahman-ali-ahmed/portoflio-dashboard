@@ -1,6 +1,8 @@
+import type { FieldValue, Timestamp } from "firebase/firestore";
+
 // src/types/index.ts
 export interface ExperienceType 
-{  id: string,name: string, field: string, place: string,startDate:string,endDate:string,isPresent:boolean }
+{  id: string,name: string, field: string, place: string,startDate:string,endDate:string,isPresent:boolean,createdAt?: Date | Timestamp | FieldValue; }
 
 export type MessageForm = {
   link: string;
