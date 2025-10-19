@@ -85,6 +85,7 @@ export default function Experience() {
       ) : (
         <Table
           data={experiences}
+          fileName="Experiences"
           columns={[
             { header: "Name", accessor: "name" },
             { header: "Field", accessor: "field" },

@@ -83,7 +83,7 @@ export default function Technology() {
 
       <Table
           data={Technologies}
-         
+          fileName="Technologies"
           columns={[
             { header: "Name", accessor: (row) => row.name },
             {

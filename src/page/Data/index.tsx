@@ -83,6 +83,7 @@ export default function Data() {
       ) : (
         <Table
           data={dataItems}
+          fileName="projects's category"
           columns={[
             { header: "Title (EN)", accessor: (row) => row.title.eng },
             { header: "Category", accessor: (row) => row.category },
